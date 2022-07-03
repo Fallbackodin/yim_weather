@@ -1,0 +1,62 @@
+https://www.youtube.com/watch?v=cWk5EKVxrgo&t=1116s:
+
+- 2:07:30
+- Implemented everything but the notifications when getting new data. This timestamp will show how to implement the notifications
+
+==============================================
+Using tailwind css as my css framework/library
+==============================================
+
+- Since I'm using yarn, in-order to install the library just replace yarn when you see npm or npx. (there are sometimes other things you have to replace like install -> add)
+
+====================================
+Unicon library @types folder problem
+====================================
+
+- In order to fix the import error (typescript couldn't find the type of the import and I couldn't find a @types folder for it), I created a .d.ts file (in this case global.d.ts) and placed it where typescript looks for my regular .ts files (in this case, I placed it in the /src folder). Then declare the module in the .d.ts file and the implicit any type error goes away!
+
+// 
+This is a solution that can work but I don't think I should unless I can't find anything else
+//
+- Had a problem with importing the library cause there isn't a @types folder for it, to fix it just add a // @ts-ignore above the import to tell typescript to ignore implicitly giving type 'any' to the library (AKA there is no @types folder for the library )
+
+===================
+Luxon library info
+===================
+
+- Just do 'yarn add luxon' and 'yarn add @types/luxon'
+
+- We use the DateTime object from Luxon inorer to get the local time???
+
+=======================================
+URL Object (built-in javascript object)
+=======================================
+
+- As you know, you use URLs (strings) in order to hit API endpoints. Making these URL strings can be very difficult (especially if you have multiple query properties you need to send over)
+
+- Javascript has a URL object that allows you to create the string easily. To create the URL (object), just create the new object with the base_url (the start of the url that will always will be the same and/or the first part of the url without the query)
+
+- You can then use the URL.searchParams.set method the set the query properties up. 
+
+- In the function getWeatherData located in the the WeatherService.ts, you can see how it works 
+
+==================================
+Object destructuring tutorial info
+==================================
+
+- This has a lot of info that I don't want to type myself so I will just copy & paste links to specific info I had trouble understanding
+
+Basic object destructuring:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#object_destructuring:~:text=Object%20destructuring-,Basic%20assignment,-const%20user%20%3D
+
+Basic object destructuring with renaming the object property: 
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#object_destructuring:~:text=the%20previous%20line.-,Assigning%20to%20new%20variable%20names,-A%20property%20can
+
+Unpacking properties from objects passed as function parameter:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#object_destructuring:~:text=Unpacking%20properties%20from%20objects%20passed%20as%20a%20function%20parameter
+
+Nested object destructuring (this is used in the formatCurrentWeather function in WeatherService.ts):
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#object_destructuring:~:text=Nested%20object%20and%20array%20destructuring
+
+Object destructuring react component props (Note that this code is in regular javascript. When using Typescript, you might need to declare the function component as React.FC or FC):
+- https://medium.com/@lcriswell/destructuring-props-in-react-b1c295005ce0#:~:text=Destructuring%20our%20props%20lets%20us%20drop%20all%20of%20the%20props.
