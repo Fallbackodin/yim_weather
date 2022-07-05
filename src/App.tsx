@@ -41,13 +41,22 @@ function App() {
     const [weather, setWeather] = useState<weatherObject>();
 
     const formatBackground = () => {
-        if (!weather) return "from-cyan-700 to-blue-700";
+        let backgroundGradient = "from-cyan-700 to-blue-700";
+
+        if (!weather) return backgroundGradient;
 
         const threshold = units === "metric" ? 20 : 68;
 
-        if (weather.temp <= threshold) return "from-cyan-700 to-blue-700";
+        if (weather.temp <= threshold) {
+            backgroundGradient = "from-cyan-700 to-blue-700";
+        } else {
+            backgroundGradient = "from-yellow-600 to-orange-700";
+        }
 
-        return "from-yellow-600 to-orange-700";
+        if (!(weather.sunrise <= weather.dt && weather.dt <= weather.sunset))
+            backgroundGradient = "from-gray-800 via-gray-800 to-gray-800";
+
+        return backgroundGradient;
     };
 
     useEffect(() => {
@@ -67,7 +76,7 @@ function App() {
 
     return (
         <div
-            className={`mx-auto max-w-screen-md mt-4 py-5 px-32 bg-gradient-to-br ${formatBackground()} h-fit shadow-xl shadow-gray-400`}
+            className={`mx-auto max-w-full py-5 px-96 bg-gradient-to-br ${formatBackground()} min-h-screen h-fit shadow-xl shadow-gray-400`}
         >
             <TopButtons setQuery={setQuery} />
             <Inputs setQuery={setQuery} units={units} setUnits={setUnits} />
