@@ -35,6 +35,7 @@ const getWeatherData = (infoType: string, queryParams: searchParams) => {
 }
 
 const formatCurrentWeather = (data: any) => {
+    // We are object destructuring data. Note here that data has nested objects in it that we are also object destructuring (like coord, main, sys, and wind)
     const {
         coord: {lat, lon},
         main: {temp, feels_like, temp_min, temp_max, humidity},
@@ -45,6 +46,9 @@ const formatCurrentWeather = (data: any) => {
         wind: {speed}
     } = data;
 
+    // Weather is an array of objects (actually it's an array with only 1 object)
+    // Weather has multiple attributes that we don't want so we use object destructuring to only get attributes we want
+    // We also rename the main attribute from weather to details
     const {main: details, icon} = weather[0];
 
     return {lat, lon, temp, feels_like, temp_min, temp_max, humidity, name, dt, country, sunrise, sunset, details, icon, speed};
@@ -52,6 +56,7 @@ const formatCurrentWeather = (data: any) => {
 
 const formatForecastWeather = (data: any) => {
     let {timezone, daily, hourly} = data;
+    // We are accessing index 1 to start since index 0 is the current day. We don't want to current day since our daily forecase will start showing information starting with the next day
     daily = daily?.slice(1, 6).map((d: any) => {
         return {
             title: formatToLocalTime(d.dt, timezone, 'ccc'),
@@ -60,6 +65,7 @@ const formatForecastWeather = (data: any) => {
         }
     });
     
+    // Our starting index is 1 for the same reason as formatForecastWeather, only instead by day, it's by hour (and of course we don't want to show the weather of the current hour in our hourly forecase).
     hourly = hourly.slice(1, 6).map((d: any) => {
         return {
             title: formatToLocalTime(d.dt, timezone, 'hh:mm a'),
@@ -72,10 +78,12 @@ const formatForecastWeather = (data: any) => {
 }
 
 const getFormattedWeatherData = async (queryParams: searchParams) => {
+    // This API call allows use to get information about the current weather
     const formattedCurrentWeather = await getWeatherData('weather', queryParams).then(data => formatCurrentWeather(data));
 
     const {lat, lon} = formattedCurrentWeather;
 
+    // This API call allows use to get information about the hourly and daily weather 
     const formattedForecastWeather = await getWeatherData('onecall', {
         lat, lon, exclude: 'current,minutely,alerts', units: queryParams.units
     }).then(data => formatForecastWeather(data));
