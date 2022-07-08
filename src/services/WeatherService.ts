@@ -35,7 +35,7 @@ const getWeatherData = (infoType: string, queryParams: searchParams) => {
 }
 
 const formatCurrentWeather = (data: any) => {
-    // We are object destructuring data. Note here that data has nested objects in it that we are also object destructuring (like coord, main, sys, and wind)
+    // We are object destructuring data. Note here that data has nested objects in it that we are also object destructuring (like coord to get lat and lon. Also refer to main, sys, and wind)
     const {
         coord: {lat, lon},
         main: {temp, feels_like, temp_min, temp_max, humidity},
