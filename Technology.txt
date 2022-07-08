@@ -1,8 +1,3 @@
-https://www.youtube.com/watch?v=cWk5EKVxrgo&t=1116s:
-
-- 2:07:30
-- Implemented everything but the notifications when getting new data. This timestamp will show how to implement the notifications
-
 ==============================================
 Using tailwind css as my css framework/library
 ==============================================
