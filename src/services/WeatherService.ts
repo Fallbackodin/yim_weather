@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import { weatherObject } from "../App";
 
 const BASE_URL = "https://api.openweathermap.org/data/2.5/"
 
@@ -7,7 +8,7 @@ export interface searchParams {
     lat?: number;
     lon?: number;
     exclude?: string;
-    units?: any;
+    units?: string;
 }
 
 export interface forecastObject {
@@ -31,7 +32,7 @@ const getWeatherData = (infoType: string, queryParams: searchParams) => {
     // When we finish creating the url, our url well be formatte like the following:
     // BASE_URL/infoType?{key=value&nextKey=Value...}
 
-    return fetch(url).then((res) => res.json()).then(data => data);
+    return fetch(url).then((res) => res.json());
 }
 
 const formatCurrentWeather = (data: any) => {
@@ -79,21 +80,26 @@ const formatForecastWeather = (data: any) => {
 
 const getFormattedWeatherData = async (queryParams: searchParams) => {
     // This API call allows use to get information about the current weather
-    const formattedCurrentWeather = await getWeatherData('weather', queryParams).then(data => formatCurrentWeather(data));
+    const currentWeather = await getWeatherData('weather', queryParams);
+    console.log(currentWeather);
+    const formattedCurrentWeather: weatherObject = formatCurrentWeather(currentWeather);
 
     const {lat, lon} = formattedCurrentWeather;
 
     // This API call allows use to get information about the hourly and daily weather 
-    const formattedForecastWeather = await getWeatherData('onecall', {
+    const forecastWeather = await getWeatherData('onecall', {
         lat, lon, exclude: 'current,minutely,alerts', units: queryParams.units
-    }).then(data => formatForecastWeather(data));
+    })
+    const formattedForecastWeather = formatForecastWeather(forecastWeather);
 
     return {...formattedCurrentWeather, ...formattedForecastWeather};
 }
 
-const formatToLocalTime = (secs: any, zone: any, format: string = "cccc, dd, LLL yyyy' | Local time: 'hh:mm a") => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
+const formatToLocalTime = (secs: number, zone: string, format: string = "cccc, dd, LLL yyyy' | Local time: 'hh:mm a") => {
+    return DateTime.fromSeconds(secs).setZone(zone).toFormat(format)
+};
 
-const iconUrlFromCode = (code: any) => `http://openweathermap.org/img/wn/${code}@2x.png`;
+const iconUrlFromCode = (code: string) => `http://openweathermap.org/img/wn/${code}@2x.png`;
 
 export default getFormattedWeatherData;
 

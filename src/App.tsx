@@ -15,24 +15,24 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export interface weatherObject {
-    timezone: any;
-    daily: forecastObject[];
-    hourly: forecastObject[];
-    lat: any;
-    lon: any;
-    temp: any;
-    feels_like: any;
-    temp_min: any;
-    temp_max: any;
-    humidity: any;
-    name: any;
+    timezone?: string;
+    daily?: forecastObject[];
+    hourly?: forecastObject[];
+    lat: number;
+    lon: number;
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    humidity: number;
+    name: string;
     dt: number;
-    country: any;
-    sunrise: any;
-    sunset: any;
-    details: any;
-    icon: any;
-    speed: any;
+    country: string;
+    sunrise: number;
+    sunset: number;
+    details: string;
+    icon: string;
+    speed: number;
 }
 
 function App() {
@@ -85,8 +85,8 @@ function App() {
                 <div>
                     <TimeAndLocation weather={weather} />
                     <TemperatureAndDetails weather={weather} />
-                    <Forecast title="hourly forecast" items={weather.hourly} />
-                    <Forecast title="daily forecast" items={weather.daily} />
+                    <Forecast title="hourly forecast" items={weather.hourly!} />
+                    <Forecast title="daily forecast" items={weather.daily!} />
                 </div>
             )}
 

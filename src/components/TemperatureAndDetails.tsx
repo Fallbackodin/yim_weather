@@ -58,7 +58,7 @@ const TemperatureAndDetails: React.FC<WeatherProp> = ({
                 <p className="font-light">
                     Rise:{" "}
                     <span className="font-medium ml-1">
-                        {formatToLocalTime(sunrise, timezone, "hh:mma")}
+                        {formatToLocalTime(sunrise, timezone!, "hh:mma")}
                     </span>
                 </p>
                 <p className="font-light">|</p>
@@ -67,7 +67,7 @@ const TemperatureAndDetails: React.FC<WeatherProp> = ({
                 <p className="font-light">
                     Set:{" "}
                     <span className="font-medium ml-1">
-                        {formatToLocalTime(sunset, timezone, "hh:mma")}
+                        {formatToLocalTime(sunset, timezone!, "hh:mma")}
                     </span>
                 </p>
                 <p className="font-light">|</p>
