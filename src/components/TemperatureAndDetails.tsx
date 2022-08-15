@@ -5,7 +5,6 @@ import {
     UilWind,
     UilSun,
     UilSunset,
-    // @ts-ignore
 } from "@iconscout/react-unicons";
 import { WeatherProp } from "./TimeAndLocation";
 import { formatToLocalTime, iconUrlFromCode } from "../services/WeatherService";

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// @ts-ignore
 import { UilSearch, UilLocationPoint } from "@iconscout/react-unicons";
 import { searchParams } from "../services/WeatherService";
 import { toast } from "react-toastify";
